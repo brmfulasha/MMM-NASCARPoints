@@ -5,6 +5,12 @@
     padding: 10px;
     border-radius: 8px;
     text-align: left;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 }
 
 .MMM-NASCARPoints h2 {
@@ -24,25 +30,28 @@
     align-items: center;
 }
 
-.MMM-NASCARPoints p strong {
-    color: #ffd700; /* Gold for driver names */
+.MMM-NASCARPoints .position {
+    font-weight: bold;
+    color: #ff4500;
+    flex: 0.3;
+    text-align: left;
+}
+
+.MMM-NASCARPoints strong {
+    color: #ffd700;
     flex: 1;
 }
 
-.MMM-NASCARPoints .position {
+.MMM-NASCARPoints .wins {
     font-weight: bold;
-    color: #ff4500; /* Orange-Red for positions */
-    margin-right: 10px;
+    color: #1e90ff;
     flex: 0.5;
     text-align: center;
 }
 
 .MMM-NASCARPoints .points {
     font-weight: bold;
-    color: #32cd32; /* Lime Green for points */
+    color: #32cd32;
     flex: 0.5;
     text-align: center;
 }
-
-.MMM-NASCARPoints .wins {
-    font-weight

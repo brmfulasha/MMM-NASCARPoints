@@ -19,6 +19,10 @@ Module.register("MMM-NASCARPoints", {
         }
     },
 
+    getStyles: function() {
+        return ["MMM-NASCARPoints.css"];
+    },
+
     getDom: function() {
         let wrapper = document.createElement("div");
         if (this.data) {

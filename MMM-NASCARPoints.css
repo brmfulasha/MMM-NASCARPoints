@@ -19,23 +19,30 @@
 .MMM-NASCARPoints p {
     font-size: 18px;
     margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .MMM-NASCARPoints p strong {
-    color: #ffd700; /* Gold color for driver names */
+    color: #ffd700; /* Gold for driver names */
+    flex: 1;
 }
 
 .MMM-NASCARPoints .position {
     font-weight: bold;
     color: #ff4500; /* Orange-Red for positions */
+    margin-right: 10px;
+    flex: 0.5;
+    text-align: center;
 }
 
 .MMM-NASCARPoints .points {
     font-weight: bold;
     color: #32cd32; /* Lime Green for points */
+    flex: 0.5;
+    text-align: center;
 }
 
 .MMM-NASCARPoints .wins {
-    font-weight: bold;
-    color: #1e90ff; /* Dodger Blue for wins */
-}
+    font-weight

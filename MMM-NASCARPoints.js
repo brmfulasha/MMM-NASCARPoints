@@ -28,7 +28,7 @@ Module.register("MMM-NASCARPoints", {
         if (this.data) {
             wrapper.innerHTML = "<h2>NASCAR Live Standings</h2>";
             this.data.forEach(driver => {
-                wrapper.innerHTML += `<p><strong>${driver.first_name} ${driver.last_name}</strong> — Position: ${driver.position} | Points: ${driver.points} | Wins: ${driver.wins}</p>`;
+                wrapper.innerHTML += `<p><span class="position">${driver.position}.</span> <strong>${driver.first_name} ${driver.last_name}</strong> | Wins: ${driver.wins} | Points: ${driver.points}</p>`;
             });
         } else {
             wrapper.innerHTML = "Loading data...";

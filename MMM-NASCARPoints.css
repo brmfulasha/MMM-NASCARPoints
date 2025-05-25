@@ -34,3 +34,8 @@
     font-weight: bold;
     color: #32cd32; /* Lime Green for points */
 }
+
+.MMM-NASCARPoints .wins {
+    font-weight: bold;
+    color: #1e90ff; /* Dodger Blue for wins */
+}

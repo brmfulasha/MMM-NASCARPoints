@@ -3,9 +3,6 @@ Module.register("MMM-NASCARPoints", {
         url: "https://cf.nascar.com/live/feeds/series_2/5314/live_points.json",
         updateInterval: 60000 // Update every 60 seconds
     },
-getStyles: function() {
-    return ["MMM-NASCARPoints.css"];
-}
 
     start: function() {
         this.data = null;
@@ -19,7 +16,7 @@ getStyles: function() {
         fetch(this.config.url)
             .then(response => response.json())
             .then(data => {
-                this.data = data;
+                this.data = data.driver_points;
                 this.updateDom();
             })
             .catch(error => console.error("Error fetching JSON:", error));
@@ -28,9 +25,9 @@ getStyles: function() {
     getDom: function() {
         let wrapper = document.createElement("div");
         if (this.data) {
-            wrapper.innerHTML = "<h2>NASCAR Live Points</h2>";
+            wrapper.innerHTML = "<h2>NASCAR Live Standings</h2>";
             this.data.forEach(driver => {
-                wrapper.innerHTML += `<p>${driver.first_name} ${driver.last_name} - Points: ${driver.points}</p>`;
+                wrapper.innerHTML += `<p><strong>${driver.first_name} ${driver.last_name}</strong> — Position: ${driver.position} | Points: ${driver.points} | Wins: ${driver.wins}</p>`;
             });
         } else {
             wrapper.innerHTML = "Loading data...";

@@ -1,0 +1,36 @@
+.MMM-NASCARPoints {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.MMM-NASCARPoints h2 {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #ffd700;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.MMM-NASCARPoints p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.MMM-NASCARPoints p strong {
+    color: #ffd700; /* Gold color for driver names */
+}
+
+.MMM-NASCARPoints .position {
+    font-weight: bold;
+    color: #ff4500; /* Orange-Red for positions */
+}
+
+.MMM-NASCARPoints .points {
+    font-weight: bold;
+    color: #32cd32; /* Lime Green for points */
+}

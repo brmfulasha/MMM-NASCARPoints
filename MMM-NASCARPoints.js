@@ -1,25 +1,22 @@
 Module.register("MMM-NASCARPoints", {
     defaults: {
         url: "https://cf.nascar.com/live/feeds/series_2/5314/live_points.json",
-        updateInterval: 60000 // Update every 60 seconds
+        updateInterval: 60000
     },
 
     start: function() {
         this.data = null;
-        this.getData();
+        this.sendSocketNotification("GET_NASCAR_DATA", { url: this.config.url });
         setInterval(() => {
-            this.getData();
+            this.sendSocketNotification("GET_NASCAR_DATA", { url: this.config.url });
         }, this.config.updateInterval);
     },
 
-    getData: function() {
-        fetch(this.config.url)
-            .then(response => response.json())
-            .then(data => {
-                this.data = data.driver_points;
-                this.updateDom();
-            })
-            .catch(error => console.error("Error fetching JSON:", error));
+    socketNotificationReceived: function(notification, payload) {
+        if (notification === "NASCAR_DATA") {
+            this.data = payload;
+            this.updateDom();
+        }
     },
 
     getDom: function() {

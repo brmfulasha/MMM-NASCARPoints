@@ -1,25 +1,34 @@
-const NodeHelper = require("node_helper");
-const fetch = require("node-fetch");
-
-module.exports = NodeHelper.create({
-    start: function() {
-        console.log("MMM-NASCARPoints node_helper started.");
+Module.register("MMM-NASCARPoints", {
+    defaults: {
+        url: "https://cf.nascar.com/live/feeds/series_2/5314/live_points.json",
+        updateInterval: 60000
     },
 
-    getData: async function(url) {
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            this.sendSocketNotification("NASCAR_DATA", data.driver_points);
-        } catch (error) {
-            console.error("Error fetching NASCAR data:", error);
-            this.sendSocketNotification("NASCAR_ERROR", { error: "Failed to fetch NASCAR data" });
-        }
+    start: function() {
+        this.data = null;
+        this.sendSocketNotification("GET_NASCAR_DATA", { url: this.config.url });
+        setInterval(() => {
+            this.sendSocketNotification("GET_NASCAR_DATA", { url: this.config.url });
+        }, this.config.updateInterval);
     },
 
     socketNotificationReceived: function(notification, payload) {
-        if (notification === "GET_NASCAR_DATA") {
-            this.getData(payload.url);
+        if (notification === "NASCAR_DATA") {
+            this.data = payload;
+            this.updateDom();
         }
+    },
+
+    getDom: function() {
+        let wrapper = document.createElement("div");
+        if (this.data) {
+            wrapper.innerHTML = "<h2>NASCAR Live Standings</h2>";
+            this.data.forEach(driver => {
+                wrapper.innerHTML += `<p><strong>${driver.first_name} ${driver.last_name}</strong> — Position: ${driver.position} | Points: ${driver.points} | Wins: ${driver.wins}</p>`;
+            });
+        } else {
+            wrapper.innerHTML = "Loading data...";
+        }
+        return wrapper;
     }
 });

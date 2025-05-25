@@ -1,0 +1,25 @@
+{
+  "name": "NASCAR Points",
+  "version": "1.0.0",
+  "description": "Live NASCAR Points",
+  "main": "MMM-NASCARPoints.js",
+  "author": "nick wakefield",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-eslint": "latest",
+    "grunt-jsonlint": "latest",
+    "grunt-markdownlint": "^1.0.13",
+    "grunt-stylelint": "latest",
+    "grunt-yamllint": "latest",
+    "stylelint-config-standard": "latest",
+    "time-grunt": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brmfulasha/MMM-NASCARPoints.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brmfulasha/MMM-NASCARPoints/issues"
+  }
+}

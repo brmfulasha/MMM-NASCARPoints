@@ -7,7 +7,7 @@ export default NodeHelper.create({
 
     getData: async function(url) {
         try {
-            const fetch = (await import("node-fetch")).default; // Dynamically import fetch
+            const fetch = (await import("node-fetch")).default; // Dynamic ESM import
             const response = await fetch(url);
             const data = await response.json();
             this.sendSocketNotification("NASCAR_DATA", data.driver_points);

@@ -4,7 +4,7 @@
     "description": "A MagicMirror module to display live NASCAR standings.",
     "author": "Nick",
     "license": "MIT",
-    "type": "module",
+    "type": "CommonJS",
     "dependencies": {
         "node-fetch": "^3.2.10"
     }

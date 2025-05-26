@@ -1,7 +1,7 @@
-const NodeHelper = require("node_helper");
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
+import NodeHelper from "node_helper";
 
-module.exports = NodeHelper.create({
+export default NodeHelper.create({
     start: function() {
         console.log("MMM-NASCARPoints node_helper started.");
     },

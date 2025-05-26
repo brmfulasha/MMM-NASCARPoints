@@ -1,11 +1,11 @@
 {
-    "name": "MMM-NASCARPoints",
+    "name": "MMM-NASCARStandings",
     "version": "1.0.0",
-    "description": "A MagicMirror module to display live NASCAR standings.",
+    "description": "A MagicMirror module to display NASCAR Cup Series standings using SportsRadar API.",
+    "main": "MMM-NASCARStandings.js",
     "author": "Nick",
     "license": "MIT",
-    "type": "CommonJS",
     "dependencies": {
-        "node-fetch": "^3.2.10"
+        "request": "^2.88.2"
     }
 }

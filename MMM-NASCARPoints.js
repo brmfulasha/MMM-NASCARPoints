@@ -1,6 +1,5 @@
 Module.register("MMM-NASCARPoints", {
     defaults: {
-        url: "https://cf.nascar.com/live/feeds/series_2/5314/live_points.json",
         updateInterval: 86400000,
         maxResults: 16
     },
@@ -9,42 +8,42 @@ Module.register("MMM-NASCARPoints", {
         this.data = null;
         this.error = null;
         this.intervalId = null;
-        this.checkRaceDay()
+        this.fetchSportradarData(); // Fetch data from Sportradar API
     },
 
-    checkRaceDay: function() {
-        var self = this;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://www.nascar.com/nascar-cup-series/2025/schedule");
-        xhr.onload = function() {
-            try {
-                var schedule = JSON.parse(xhr.responseText);
-                var today = new Date().toISOString().split("T")[0];
-                var raceToday = Array.isArray(schedule) && schedule.some(function(event) {
-                    return event.date === today;
-                });
-                var interval = raceToday ? 60000 : 86400000;
-                self.getData();
-                if (self.intervalId) clearInterval(self.intervalId);
-                self.intervalId = setInterval(function() {
-                    self.getData();
-                }, interval);
-            } catch (err) {
-                console.error("Error processing NASCAR schedule:", err);
-                self.error = "Failed to load NASCAR schedule.";
-                self.updateDom();
+    fetchSportradarData: function() {
+        const http = require('https');
+
+        const options = {
+            method: 'GET',
+            hostname: 'api.sportradar.com',
+            port: null,
+            path: '/nascar-ot3/mc/2025/standings/drivers.json',
+            headers: {
+                accept: 'application/json',
+                'x-api-key': 'WEWzA7Wxzu25w7v29YUeT1b6n3Kq4D07N2ZpYcQl'
             }
         };
-        xhr.onerror = function() {
-            console.error("Error fetching NASCAR schedule (network).");
-            self.error = "Network error loading NASCAR schedule.";
-            self.updateDom();
-        };
-        xhr.send();
-    },
 
-    getData: function() {
-        this.sendSocketNotification("GET_NASCAR_DATA", { url: this.config.url });
+        const req = http.request(options, function(res) {
+            const chunks = [];
+
+            res.on('data', function(chunk) {
+                chunks.push(chunk);
+            });
+
+            res.on('end', function() {
+                const body = Buffer.concat(chunks);
+                console.log('Sportradar Data:', body.toString());
+                // You can further process or update the DOM here if needed
+            });
+        });
+
+        req.on('error', function(e) {
+            console.error('Error fetching Sportradar data:', e.message);
+        });
+
+        req.end();
     },
 
     socketNotificationReceived: function(notification, payload) {
@@ -93,16 +92,9 @@ Module.register("MMM-NASCARPoints", {
             drivers = drivers.sort((a, b) => a[this.config.sortBy] - b[this.config.sortBy]);
         }
         drivers.forEach((driver) => {
-            var p = document.createElement("p");
-            var fields = this.config.displayFields || ["position", "full_name", "wins", "points"];
-            var text = fields.map(f => driver[f]).join(" | ");
-            p.innerHTML = text;
-            list.appendChild(p);
+            // Driver rendering logic
         });
-        wrapper.appendChild(list);
-    } else {
-        wrapper.innerHTML = "Loading data...";
     }
     return wrapper;
-}
+   }
 });

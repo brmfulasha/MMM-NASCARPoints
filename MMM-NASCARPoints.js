@@ -1,8 +1,8 @@
 Module.register("MMM-NASCARPoints", {
     defaults: {
         url: "https://cf.nascar.com/live/feeds/series_2/5314/live_points.json",
-        updateInterval: 86400000, // Default: 24 hours (updates dynamically on race days)
-        maxResults: 16 // Updated to display the top 16 drivers
+        updateInterval: 86400000,
+        maxResults: 16
     },
 
     start: function() {
@@ -31,7 +31,7 @@ Module.register("MMM-NASCARPoints", {
 
     socketNotificationReceived: function(notification, payload) {
         if (notification === "NASCAR_DATA") {
-            this.data = payload.slice(0, this.config.maxResults); // Display only the top 16 drivers
+            this.data = payload.slice(0, this.config.maxResults);
             this.updateDom();
         }
     },

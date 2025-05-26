@@ -1,26 +1,43 @@
 Module.register("MMM-NASCARPoints", {
     defaults: {
         url: "https://cf.nascar.com/live/feeds/series_2/5314/live_points.json",
-        updateInterval: 60000
+        updateInterval: 86400000 // Default: 24 hours (will adjust dynamically)
     },
 
     start: function() {
         this.data = null;
-        this.sendSocketNotification("GET_NASCAR_DATA", { url: this.config.url });
-        setInterval(() => {
-            this.sendSocketNotification("GET_NASCAR_DATA", { url: this.config.url });
-        }, this.config.updateInterval);
+        this.checkRaceDay();
     },
 
-    socketNotificationReceived: function(notification, payload) {
-        if (notification === "NASCAR_DATA") {
-            this.data = payload;
-            this.updateDom();
-        }
+    checkRaceDay: function() {
+        fetch("https://www.sportingnews.com/us/nascar/schedule") // NASCAR schedule API
+            .then(response => response.json())
+            .then(schedule => {
+                const today = new Date().toISOString().split("T")[0]; // Get today's date
+                const raceToday = schedule.some(event => event.date === today);
+
+                if (raceToday) {
+                    this.config.updateInterval = 60000; // Refresh every 60 seconds on race days
+                } else {
+                    this.config.updateInterval = 86400000; // Refresh every 24 hours otherwise
+                }
+
+                this.getData();
+                setInterval(() => {
+                    this.getData();
+                }, this.config.updateInterval);
+            })
+            .catch(error => console.error("Error fetching NASCAR schedule:", error));
     },
 
-    getStyles: function() {
-        return ["MMM-NASCARPoints.css"];
+    getData: function() {
+        fetch(this.config.url)
+            .then(response => response.json())
+            .then(data => {
+                this.data = data.driver_points;
+                this.updateDom();
+            })
+            .catch(error => console.error("Error fetching NASCAR data:", error));
     },
 
     getDom: function() {

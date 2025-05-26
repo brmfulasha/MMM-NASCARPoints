@@ -1,51 +1,34 @@
-.MMM-NASCARPoints {
-    font-family: Arial, sans-serif;
+.MMM-NASCARStandings {
+    text-align: center;
+    font-family: "Arial", sans-serif;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-    text-align: left;
 }
 
-.MMM-NASCARPoints h2 {
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-    border-bottom: 2px solid #ffd700;
-    padding-bottom: 5px;
+.MMM-NASCARStandings h2 {
+    font-size: 1.8em;
     margin-bottom: 10px;
 }
 
-.MMM-NASCARPoints p {
-    font-size: 18px;
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.MMM-NASCARStandings table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.MMM-NASCARPoints .position {
+.MMM-NASCARStandings table tr {
+    border-bottom: 1px solid #777;
+}
+
+.MMM-NASCARStandings table td {
+    padding: 10px;
+    font-size: 1.2em;
+}
+
+.MMM-NASCARStandings table tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.MMM-NASCARStandings table tr:first-child {
     font-weight: bold;
-    color: #ff4500;
-    flex: 0.3;
-    text-align: left;
-}
-
-.MMM-NASCARPoints strong {
-    color: #ffd700;
-    flex: 1;
-}
-
-.MMM-NASCARPoints .wins {
-    font-weight: bold;
-    color: #1e90ff;
-    flex: 0.5;
-    text-align: center;
-}
-
-.MMM-NASCARPoints .points {
-    font-weight: bold;
-    color: #32cd32;
-    flex: 0.5;
-    text-align: center;
+    background-color: #0047AB;
+    color: white;
 }

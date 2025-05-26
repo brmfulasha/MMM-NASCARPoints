@@ -68,25 +68,41 @@ Module.register("MMM-NASCARPoints", {
         return ["MMM-NASCARPoints.css"];
     },
 
-    getDom: function() {
-        var wrapper = document.createElement("div");
-        wrapper.className = "MMM-NASCARPoints";
-        if (this.error) {
-            wrapper.innerHTML = "<span class='error'>" + this.error + "</span>";
-        } else if (this.data && Array.isArray(this.data)) {
-            wrapper.innerHTML = "<h2>NASCAR Top 16 Standings</h2>";
-            var list = document.createElement("div");
-            this.data.forEach(function(driver) {
-                var p = document.createElement("p");
-                p.innerHTML = "<span class='position'>" + driver.position + ".</span> <strong>" +
-                    driver.first_name + " " + driver.last_name + "</strong> | Wins: " + driver.wins + 
-                    " | Points: " + driver.points;
-                list.appendChild(p);
-            });
-            wrapper.appendChild(list);
-        } else {
-            wrapper.innerHTML = "Loading data...";
+   getDom: function() {
+    var wrapper = document.createElement("div");
+    wrapper.className = "MMM-NASCARPoints";
+    if (this.error) {
+        wrapper.innerHTML = "<span class='error'>" + this.error + "</span>";
+    } else if (this.data && Array.isArray(this.data)) {
+        // Header text
+        if (this.config.headerText) {
+            var header = document.createElement("div");
+            header.innerHTML = this.config.headerText;
+            header.style.color = this.config.textColor || "#FFF";
+            header.style.fontSize = this.config.textSize === "small" ? "1.2em" : "1.5em";
+            wrapper.appendChild(header);
         }
-        return wrapper;
+
+        var list = document.createElement("div");
+        list.style.color = this.config.textColor || "#FFF";
+        list.style.fontSize = this.config.textSize === "small" ? "0.9em" : "1.2em";
+
+        var drivers = this.data.slice(0, this.config.maxResults || 16);
+        // Optionally sort
+        if (this.config.sortBy) {
+            drivers = drivers.sort((a, b) => a[this.config.sortBy] - b[this.config.sortBy]);
+        }
+        drivers.forEach((driver) => {
+            var p = document.createElement("p");
+            var fields = this.config.displayFields || ["position", "full_name", "wins", "points"];
+            var text = fields.map(f => driver[f]).join(" | ");
+            p.innerHTML = text;
+            list.appendChild(p);
+        });
+        wrapper.appendChild(list);
+    } else {
+        wrapper.innerHTML = "Loading data...";
     }
+    return wrapper;
+}
 });

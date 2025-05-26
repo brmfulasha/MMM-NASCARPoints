@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+
 import NodeHelper from "node_helper";
 
 export default NodeHelper.create({

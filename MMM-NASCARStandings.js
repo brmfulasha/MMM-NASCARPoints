@@ -23,19 +23,24 @@ Module.register("MMM-NASCARStandings", {
     wrapper.className = "MMM-NASCARStandings";
     wrapper.innerHTML = "<h2>NASCAR Cup Series Standings</h2>";
 
-    // Check to see if standings have been received and the API has an array called drivers.
+    // Check if standings are available and if the API has an array called drivers.
     if (this.standings && this.standings.drivers) {
       let table = document.createElement("table");
       
-      // Create and append the table header row
+      // Create and append the table header row (with Rank, Driver, Wins, Points)
       let headerRow = document.createElement("tr");
-      headerRow.innerHTML = `<td>Pos</td><td>Driver</td><td>Points</td>`;
+      headerRow.innerHTML = `<td>Rank</td><td>Driver</td><td>Wins</td><td>Points</td>`;
       table.appendChild(headerRow);
 
-      // Loop through the drivers array and display full_name for each driver.
+      // Loop through the drivers array and display data accordingly.
+      // We use driver.rank or fallback to driver.position if rank isn't defined.
+      // Now include driver.wins for the Wins column.
       this.standings.drivers.forEach(driver => {
         let row = document.createElement("tr");
-        row.innerHTML = `<td>${driver.position}</td><td>${driver.full_name}</td><td>${driver.points}</td>`;
+        row.innerHTML = `<td>${driver.rank || driver.position}</td>
+                         <td>${driver.full_name}</td>
+                         <td>${driver.wins || 0}</td>
+                         <td>${driver.points}</td>`;
         table.appendChild(row);
       });
       wrapper.appendChild(table);

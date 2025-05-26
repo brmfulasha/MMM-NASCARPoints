@@ -6,7 +6,6 @@ module.exports = NodeHelper.create({
     console.log("MMM-NASCARStandings helper started...");
   },
 
-  // Listen for the FETCH_NASCAR_STANDINGS notification from the front-end.
   socketNotificationReceived: function (notification, payload) {
     if (notification === "FETCH_NASCAR_STANDINGS") {
       this.fetchStandings(payload);
@@ -19,15 +18,14 @@ module.exports = NodeHelper.create({
     const options = {
       method: 'GET',
       hostname: 'api.sportradar.com',
-      port: null, // default HTTPS port (443) is used when null or omitted
+      port: null,  // Default HTTPS port (443) will be used
       path: '/nascar-ot3/mc/2025/standings/drivers.json',
       headers: {
         accept: 'application/json',
-        'x-api-key': apiKey // using the provided API key from payload
+        'x-api-key': apiKey
       }
     };
 
-    // Make the HTTPS request.
     const req = https.request(options, (res) => {
       const chunks = [];
       console.log(`Response status code: ${res.statusCode}`);
@@ -42,8 +40,13 @@ module.exports = NodeHelper.create({
         console.log("Raw response:", body);
         try {
           const data = JSON.parse(body);
-          console.log("Parsed standings:", data);
-          // Send the data back to the front-end
+          // Filter the drivers array to only include the top 16 drivers.
+          if (data && Array.isArray(data.drivers)) {
+            data.drivers = data.drivers.slice(0, 16);
+          } else {
+            console.error("No drivers array found in API response");
+          }
+          console.log("Filtered standings (top 16 drivers):", data);
           this.sendSocketNotification("NASCAR_STANDINGS_RESULT", data);
         } catch (error) {
           console.error("Error parsing JSON:", error);

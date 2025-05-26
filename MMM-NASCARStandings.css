@@ -1,34 +1,45 @@
+/* MMM-NASCARStandings CSS file */
+
 .MMM-NASCARStandings {
-    text-align: center;
-    font-family: "Arial", sans-serif;
-    color: #ffffff;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  overflow: auto;  /* Ensures content stays within the module boundaries */
 }
 
-.MMM-NASCARStandings h2 {
-    font-size: 1.8em;
-    margin-bottom: 10px;
+/* Header container that holds the header image */
+.header-container {
+  margin-bottom: 10px;
 }
 
+/* Style for the header image */
+.header-image {
+  max-width: 100%;  /* Ensures the image scales to the module's width */
+  height: auto;
+}
+
+/* Table styling */
 .MMM-NASCARStandings table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
 }
 
 .MMM-NASCARStandings table tr {
-    border-bottom: 1px solid #777;
+  border-bottom: 1px solid #777;
 }
 
 .MMM-NASCARStandings table td {
-    padding: 10px;
-    font-size: 1.2em;
+  padding: 6px;
+  font-size: 0.8em;  /* Small text for table cells */
 }
 
 .MMM-NASCARStandings table tr:nth-child(odd) {
-    background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .MMM-NASCARStandings table tr:first-child {
-    font-weight: bold;
-    background-color: #0047AB;
-    color: white;
+  font-weight: bold;
+  background-color: #0047AB;
+  color: white;
 }

@@ -1,4 +1,3 @@
-const NodeHelper = require("node_helper");
 
 Module.register("MMM-NASCARStandings", {
   // Default configuration options

@@ -4,29 +4,31 @@
   text-align: center;
   font-family: Arial, sans-serif;
   color: #ffffff;
-  overflow: auto;
-  width: 300px;   /* Configured module width */
-  height: 300px;  /* Configured module height */
+  overflow: hidden;   /* Ensure nothing overflows out of our fixed module dimensions */
+  width: 300px;       /* Module width per configuration */
+  height: 300px;      /* Module height per configuration */
 }
 
-/* Header container with fixed height */
-.header-container {
+/* Header container with a fixed height */
+.MMM-NASCARStandings .header-container {
   width: 100%;
-  height: 80px;       /* Desired header height */
+  height: 80px;       /* Fixed header height */
   margin-bottom: 10px;
-  overflow: hidden;   /* Hide any overflow so the image doesn't exceed the container */
+  overflow: hidden;   /* Hide anything that exceeds the container */
+  position: relative; /* Needed for absolute positioning of the image */
 }
 
-/* Force the header image to scale relative to the container */
-.header-image {
+/* Force the header image to fill the header container */
+.MMM-NASCARStandings .header-container .header-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;   /* Override any intrinsic sizing */
+  height: 100% !important;  /* Force the image to exactly fill the container height */
+  object-fit: contain;      /* Scale the image proportionally without cropping, use "cover" if you prefer cropping */
   display: block;
-  width: 100% !important;       /* Force image width to full container width */
-  height: 100% !important;      /* Force image height to fill container */
-  max-width: 100% !important;   /* Ensure image doesn't exceed container dimensions */
-  max-height: 100% !important;
-  object-fit: contain;          /* Preserve aspect ratio */
 }
-  
+
 /* Table styling */
 .MMM-NASCARStandings table {
   width: 100%;
@@ -40,7 +42,7 @@
 
 .MMM-NASCARStandings table td {
   padding: 6px;
-  font-size: 0.8em;
+  font-size: 0.8em;   /* Smaller body text */
 }
 
 .MMM-NASCARStandings table tr:nth-child(odd) {

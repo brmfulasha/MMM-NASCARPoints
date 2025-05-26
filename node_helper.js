@@ -9,13 +9,14 @@ module.exports = NodeHelper.create({
   socketNotificationReceived: function(notification, payload) {
     if (notification === "FETCH_NASCAR_STANDINGS") {
       this.fetchStandings(payload);
+    } else {
+      console.log("Unhandled notification: " + notification);
     }
   },
 
-  // Perform an HTTP GET request with the provided API key
   fetchStandings: function(apiKey) {
     const url = `http://api.sportradar.com/motorsports/trial/v2/en/series/NASCAR/cup/standings.json?api_key=${apiKey}`;
-    
+
     http.get(url, res => {
       let data = "";
       res.on("data", chunk => {
@@ -24,6 +25,7 @@ module.exports = NodeHelper.create({
       res.on("end", () => {
         try {
           const standings = JSON.parse(data);
+          console.log("Fetched standings in node_helper:", standings);
           this.sendSocketNotification("NASCAR_STANDINGS_RESULT", standings);
         } catch (error) {
           console.error("Error parsing JSON:", error);

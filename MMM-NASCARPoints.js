@@ -9,13 +9,13 @@ Module.register("MMM-NASCARPoints", {
         this.data = null;
         this.error = null;
         this.intervalId = null;
-        this.checkRaceDay();
+        this.checkRaceDay()
     },
 
     checkRaceDay: function() {
         var self = this;
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://www.sportingnews.com/us/nascar/schedule");
+        xhr.open("GET", "https://www.nascar.com/nascar-cup-series/2025/schedule");
         xhr.onload = function() {
             try {
                 var schedule = JSON.parse(xhr.responseText);

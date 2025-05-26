@@ -40,16 +40,22 @@ Module.register("MMM-NASCARPoints", {
         return ["MMM-NASCARPoints.css"];
     },
 
-    getDom: function() {
-        let wrapper = document.createElement("div");
-        if (this.data) {
-            wrapper.innerHTML = "<h2>NASCAR Top 16 Standings</h2>";
-            this.data.forEach(driver => {
-                wrapper.innerHTML += `<p><span class="position">${driver.position}.</span> <strong>${driver.first_name} ${driver.last_name}</strong> | Wins: ${driver.wins} | Points: ${driver.points}</p>`;
-            });
-        } else {
-            wrapper.innerHTML = "Loading data...";
-        }
-        return wrapper;
+   getDom: function() {
+    let wrapper = document.createElement("div");
+    if (this.data && Array.isArray(this.data)) {
+        wrapper.innerHTML = "<h2>NASCAR Top 16 Standings</h2>";
+        const list = document.createElement("ul");
+        this.data.forEach(driver => {
+            const item = document.createElement("li");
+            item.innerHTML = `<span class="position">${driver.position}.</span> <strong>${driver.first_name} ${driver.last_name}</strong> | Wins: ${driver.wins} | Points: ${driver.points}`;
+            list.appendChild(item);
+        });
+        wrapper.appendChild(list);
+    } else if (this.error) {
+        wrapper.innerHTML = `<span class="error">${this.error}</span>`;
+    } else {
+        wrapper.innerHTML = "Loading data...";
     }
+    return wrapper;
+}
 });

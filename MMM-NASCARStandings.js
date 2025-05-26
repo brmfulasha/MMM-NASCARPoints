@@ -1,9 +1,7 @@
-
 Module.register("MMM-NASCARStandings", {
-  // Default configuration options
   defaults: {
-    apiKey: "WEWzA7Wxzu25w7v29YUeT1b6n3Kq4D07N2ZpYcQl", // Use environment variables in production
-    updateInterval: 3600000 // Update every hour (in milliseconds)
+    apiKey: "WEWzA7Wxzu25w7v29YUeT1b6n3Kq4D07N2ZpYcQl", // In production, secure this key via environment variables.
+    updateInterval: 3600000 // Update every hour (milliseconds)
   },
 
   start: function() {
@@ -14,28 +12,30 @@ Module.register("MMM-NASCARStandings", {
     }, this.config.updateInterval);
   },
 
-  // Trigger the Node Helper to fetch data via an HTTP GET call
+  // Send a socket notification to the Node Helper to fetch standings
   getStandings: function() {
     this.sendSocketNotification("FETCH_NASCAR_STANDINGS", this.config.apiKey);
   },
 
-  // Build the MagicMirror DOM elements based on the fetched data
+  // Build the DOM element that displays the standings
   getDom: function() {
     let wrapper = document.createElement("div");
     wrapper.className = "MMM-NASCARStandings";
     wrapper.innerHTML = "<h2>NASCAR Cup Series Standings</h2>";
 
+    // Check to see if standings have been received and the API has an array called drivers.
     if (this.standings && this.standings.drivers) {
       let table = document.createElement("table");
-      // Create a header row for clarity
+      
+      // Create and append the table header row
       let headerRow = document.createElement("tr");
       headerRow.innerHTML = `<td>Pos</td><td>Driver</td><td>Points</td>`;
       table.appendChild(headerRow);
 
-      // Loop through the `drivers` array and create table rows
+      // Loop through the drivers array and display full_name for each driver.
       this.standings.drivers.forEach(driver => {
         let row = document.createElement("tr");
-        row.innerHTML = `<td>${driver.position}</td><td>${driver.name}</td><td>${driver.points}</td>`;
+        row.innerHTML = `<td>${driver.position}</td><td>${driver.full_name}</td><td>${driver.points}</td>`;
         table.appendChild(row);
       });
       wrapper.appendChild(table);
@@ -45,9 +45,10 @@ Module.register("MMM-NASCARStandings", {
     return wrapper;
   },
 
-  // Update the module when receiving new data from the Node Helper
+  // Listen for data from the Node Helper and update the DOM accordingly
   socketNotificationReceived: function(notification, payload) {
     if (notification === "NASCAR_STANDINGS_RESULT") {
+      console.log("Received standings on front end:", payload); // Debug log
       this.standings = payload;
       this.updateDom();
     }

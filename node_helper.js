@@ -1,27 +1,33 @@
 const NodeHelper = require("node_helper");
-const fetch = require("node-fetch"); // Ensure you run: npm install node-fetch
+const http = require("http");
 
 module.exports = NodeHelper.create({
     start: function() {
-        console.log("MMM-NASCARPoints node_helper started.");
-    },
-
-    getData: function(url) {
-        const self = this;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                self.sendSocketNotification("NASCAR_DATA", data.driver_points);
-            })
-            .catch(error => {
-                console.error("Error fetching NASCAR data:", error);
-                self.sendSocketNotification("NASCAR_ERROR", { error: "Failed to fetch NASCAR data" });
-            });
+        console.log("MMM-NASCARStandings helper started...");
     },
 
     socketNotificationReceived: function(notification, payload) {
-        if (notification === "GET_NASCAR_DATA") {
-            this.getData(payload.url);
+        if (notification === "FETCH_NASCAR_STANDINGS") {
+            this.fetchStandings(payload);
         }
+    },
+
+    fetchStandings: function(apiKey) {
+        const url = `http://api.sportradar.com/motorsports/trial/v2/en/series/NASCAR/cup/standings.json?api_key=${apiKey}`;
+
+        http.get(url, res => {
+            let data = "";
+            res.on("data", chunk => { data += chunk; });
+            res.on("end", () => {
+                try {
+                    const standings = JSON.parse(data);
+                    this.sendSocketNotification("NASCAR_STANDINGS_RESULT", standings);
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                }
+            });
+        }).on("error", error => {
+            console.error("HTTP request failed:", error);
+        });
     }
 });

@@ -16,7 +16,7 @@ module.exports = NodeHelper.create({
 
   fetchStandings: function(apiKey) {
     const url = `http://api.sportradar.com/motorsports/trial/v2/en/series/NASCAR/cup/standings.json?api_key=${apiKey}`;
-
+    
     http.get(url, res => {
       let data = "";
       res.on("data", chunk => {

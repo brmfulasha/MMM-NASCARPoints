@@ -19,10 +19,26 @@
   gap: 12px;
 }
 
+/* Option: Use an image as the module header via CSS background, instead of an <img> in HTML.
+   Add the class 'header-image' to your module config to use this style. */
+.MMM-NASCARStandings.header-image h2 {
+  background: url('https://loodibee.com/wp-content/uploads/NASCAR-Cup-Series.png') no-repeat left center;
+  background-size: 100px auto;
+  min-height: 100px;
+  padding-left: 110px;
+  margin: 0;
+  align-items: center;
+  display: flex;
+}
+
+/* If using an <img> tag in the header */
 .MMM-NASCARStandings h2 img {
   vertical-align: middle;
   margin: 0;
   padding: 0;
+  height: 100px;
+  width: auto;
+  display: block;
 }
 
 /* Table styling */

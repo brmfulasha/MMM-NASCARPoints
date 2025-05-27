@@ -3,7 +3,7 @@
 /* Module container styling 
    No fixed width, height, or font-size is defined here so they can be set externally */
 .MMM-NASCARStandings {
-  text-align: center;
+  text-align: left; /* CHANGED from center to left */
   font-family: Arial, sans-serif;
   color: #ffffff;
   overflow: hidden;
@@ -15,6 +15,15 @@
 .MMM-NASCARStandings h2 {
   margin: 0 0 10px 0;
   padding: 0;
+  text-align: left; /* ADDED to ensure left alignment */
+  display: flex;    /* ADDED for image/text alignment */
+  align-items: center; /* ADDED for vertical centering */
+  gap: 12px;           /* ADDED for spacing between image and text */
+}
+
+.MMM-NASCARStandings h2 img {
+  vertical-align: middle; /* ADDED for image alignment */
+  margin-right: 12px;     /* ADDED for spacing */
 }
 
 /* Table styling */

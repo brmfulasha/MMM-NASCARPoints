@@ -1,19 +1,27 @@
 /* MMM-NASCARStandings CSS file */
 
-/* Module container styling 
-   No fixed width, height, or font-size is defined here so they can be set externally */
+/* Module container styling */
 .MMM-NASCARStandings {
-  text-align: center;
+  text-align: left;
   font-family: Arial, sans-serif;
   color: #ffffff;
   overflow: hidden;
-  padding: 10px; /* Optional padding; remove or adjust as needed */
+  padding: 10px;
 }
 
-/* Optional text header styling 
-   Font size is left undefined to be controlled externally */
+/* Optional text header styling */
 .MMM-NASCARStandings h2 {
   margin: 0 0 10px 0;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.MMM-NASCARStandings h2 img {
+  vertical-align: middle;
+  margin: 0;
   padding: 0;
 }
 
@@ -29,8 +37,7 @@
 }
 
 .MMM-NASCARStandings table td {
-  padding: 3px;
-  /* Font size is removed here so custom.css can set it */
+  padding: 6px;
 }
 
 .MMM-NASCARStandings table tr:nth-child(odd) {
@@ -41,4 +48,22 @@
   font-weight: bold;
   background-color: #0047AB;
   color: white;
+}
+
+/* Scrolling ticker CSS */
+.nascar-standings-ticker {
+  white-space: nowrap;
+  display: inline-block;
+  animation: nascar-scroll-right-left 25s linear infinite;
+  font-size: 1.1em;
+  padding-left: 100%;
+}
+
+@keyframes nascar-scroll-right-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }

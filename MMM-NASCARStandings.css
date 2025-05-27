@@ -1,16 +1,22 @@
 /* MMM-NASCARStandings CSS file */
 
+/* Module container styling */
 .MMM-NASCARStandings {
   text-align: center;
   font-family: Arial, sans-serif;
   color: #ffffff;
-  overflow: hidden;   /* Ensure nothing overflows out of the fixed module dimensions */
-  width: 300px;       /* Set module width */
-  height: 300px;      /* Set module height */
+  overflow: hidden;
+  width: 300px;  /* Module width */
+  height: 300px; /* Module height */
+  padding: 10px; /* Optional padding for spacing */
 }
 
-/* If you have any header container in the HTML, you can remove or leave this empty. 
-   The image-related classes have been removed. */
+/* Optional text header styling (applies to an <h2> element) */
+.MMM-NASCARStandings h2 {
+  font-size: 1.5em;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
 
 /* Table styling */
 .MMM-NASCARStandings table {

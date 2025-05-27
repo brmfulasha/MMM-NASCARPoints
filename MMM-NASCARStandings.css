@@ -42,3 +42,21 @@
   background-color: #0047AB;
   color: white;
 }
+
+/* Scrolling ticker CSS */
+.nascar-standings-ticker {
+  white-space: nowrap;
+  display: inline-block;
+  animation: nascar-scroll-right-left 25s linear infinite;
+  font-size: 1.1em;
+  padding-left: 100%;
+}
+
+@keyframes nascar-scroll-right-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

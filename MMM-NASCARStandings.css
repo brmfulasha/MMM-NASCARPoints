@@ -1,19 +1,18 @@
 /* MMM-NASCARStandings CSS file */
 
-/* Module container styling */
+/* Module container styling 
+   No fixed width, height, or font-size is defined here so they can be set externally */
 .MMM-NASCARStandings {
   text-align: center;
   font-family: Arial, sans-serif;
   color: #ffffff;
   overflow: hidden;
-  width: 300px;  /* Module width */
-  height: 300px; /* Module height */
-  padding: 10px; /* Optional padding for spacing */
+  padding: 10px; /* Optional padding; remove or adjust as needed */
 }
 
-/* Optional text header styling (applies to an <h2> element) */
+/* Optional text header styling 
+   Font size is left undefined to be controlled externally */
 .MMM-NASCARStandings h2 {
-  font-size: 1.5em;
   margin: 0 0 10px 0;
   padding: 0;
 }
@@ -31,7 +30,7 @@
 
 .MMM-NASCARStandings table td {
   padding: 6px;
-  font-size: 0.8em;  /* Small text for table cells */
+  /* Font size is removed here so custom.css can set it */
 }
 
 .MMM-NASCARStandings table tr:nth-child(odd) {

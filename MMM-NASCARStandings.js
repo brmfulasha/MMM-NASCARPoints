@@ -3,8 +3,8 @@ Module.register("MMM-NASCARStandings", {
     apiKey: "WEWzA7Wxzu25w7v29YUeT1b6n3Kq4D07N2ZpYcQl", // Your API key
     updateInterval: 3600000,     // Update every hour (in milliseconds)
     maxDrivers: 16,              // Show only the top 16 drivers
-    moduleWidth: "300px",        // Module width
-    moduleHeight: "300px"        // Module height
+    moduleWidth: "400px",        // Module width
+    moduleHeight: "60px"         // Module height for scrolling line
   },
 
   start: function() {
@@ -20,31 +20,31 @@ Module.register("MMM-NASCARStandings", {
     this.sendSocketNotification("FETCH_NASCAR_STANDINGS", this.config.apiKey);
   },
 
-  // Build the DOM element for the module without any header image
+  // Render as a single-line scrolling ticker
   getDom: function() {
     let wrapper = document.createElement("div");
     wrapper.className = "MMM-NASCARStandings";
     wrapper.style.width = this.config.moduleWidth;
     wrapper.style.height = this.config.moduleHeight;
+    wrapper.style.overflow = "hidden";
+    wrapper.style.position = "relative";
+    wrapper.style.display = "flex";
+    wrapper.style.alignItems = "center";
 
-    // Display the standings table if data is available
     if (this.standings && this.standings.drivers) {
-      let table = document.createElement("table");
-      let headerRow = document.createElement("tr");
-      headerRow.innerHTML = `<td>Rank</td><td>Driver</td><td>Wins</td><td>Points</td>`;
-      table.appendChild(headerRow);
+      // Build a long string with all driver standings
+      let standingsText = this.standings.drivers
+        .slice(0, this.config.maxDrivers)
+        .map(driver => 
+          `#${driver.rank || driver.position}: ${driver.full_name} (${driver.points} pts, ${driver.wins || 0} wins)`
+        ).join("  |  ");
 
-      // Only include the top maxDrivers entries
-      let driversToShow = this.standings.drivers.slice(0, this.config.maxDrivers);
-      driversToShow.forEach(driver => {
-        let row = document.createElement("tr");
-        row.innerHTML = `<td>${driver.rank || driver.position}</td>
-                         <td>${driver.full_name}</td>
-                         <td>${driver.wins || 0}</td>
-                         <td>${driver.points}</td>`;
-        table.appendChild(row);
-      });
-      wrapper.appendChild(table);
+      // Scrolling div
+      let ticker = document.createElement("div");
+      ticker.className = "nascar-standings-ticker";
+      ticker.textContent = standingsText;
+
+      wrapper.appendChild(ticker);
     } else {
       let loading = document.createElement("p");
       loading.textContent = "Loading standings...";
@@ -55,7 +55,6 @@ Module.register("MMM-NASCARStandings", {
 
   socketNotificationReceived: function(notification, payload) {
     if (notification === "NASCAR_STANDINGS_RESULT") {
-      console.log("Received standings on front end:", payload);
       this.standings = payload;
       this.updateDom();
     }

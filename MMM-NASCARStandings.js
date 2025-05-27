@@ -27,11 +27,6 @@ Module.register("MMM-NASCARStandings", {
     wrapper.style.width = this.config.moduleWidth;
     wrapper.style.height = this.config.moduleHeight;
 
-    // Optional: Create a text-based header
-    let title = document.createElement("h2");
-    title.textContent = "NASCAR Standings";
-    wrapper.appendChild(title);
-
     // Display the standings table if data is available
     if (this.standings && this.standings.drivers) {
       let table = document.createElement("table");
